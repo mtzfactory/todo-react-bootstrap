@@ -5,7 +5,7 @@
 
 ### Otro TO-DO realizado en React, con ayuda de Bootstrap.
 
-Jugando un poco React ;-)
+Jugando un poco con React ;-)
 
 [enlace](https://bootsnipp.com/snippets/featured/todo-example)
 
