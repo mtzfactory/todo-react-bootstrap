@@ -5,7 +5,7 @@
 ![html-5](https://mtzfactory.github.io/logos/png/html-5.png)
 ![css-3](https://mtzfactory.github.io/logos/png/css-3.png)
 
-### TO-DO app ~ realizado en React, y un poco de ayuda de Bootstrap.
+### TO-DO app ~ realizado en React, y un poco de Bootstrap.
 
 Transformación a React de una [template][todo-template] que usa JQuery y Bootstrap.
 
