@@ -5,7 +5,7 @@
 
 ### TO-DO app ~ realizado en React, y un poco de ayuda de Bootstrap.
 
-Transformación a React de una [template[todo-template] que usa JQuery y Bootstrap.
+Transformación a React de una [template][todo-template] que usa JQuery y Bootstrap.
 
 ![screenshoot](./img/screenshoot-1.png)
 
