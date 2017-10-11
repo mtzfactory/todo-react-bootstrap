@@ -22,8 +22,7 @@ Array.prototype.enhanceddMap = function(key, value, callback) {
     const arr = []
     this.forEach(function(item, index) {
         if (item.hasOwnProperty(key) && item[key] === value) {
-            if (callback) arr.push(callback(item, index))
-            else arr.push(item)
+            arr.push(callback ? callback(item, index) : item)
         }
     })
 
@@ -152,7 +151,10 @@ class Todo extends React.Component {
                 <hr/>
                 <TodosList onHandleDoneClick={ this.props.onHandleDoneClick } todos={ this.props.todos }/>
                 <TodosFooter total={ 
-                    this.props.todos.enhanceddMap('done', false).length
+                    //this.props.todos.enhanceddMap('done', false).length
+                    this.props.todos.reduce(function(acum, todo) {
+                        return !todo.done ? ++acum : acum
+                    }, 0)
                 }/>
             </div>
         )
@@ -164,10 +166,10 @@ class TodosList extends React.Component {
         return (
             <ul id="sortable" className="list-unstyled">
                 {
-                    this.props.todos.enhanceddMap('done', false, (todo, index) => {
+                    this.props.todos.enhanceddMap('done', false, (todo) => {
                         return (
                                 <li  
-                                    key={ index }
+                                    key={ todo.id }
                                     className="ui-state-default" >
                                     <div className="checkbox">
                                         <label>
