@@ -41,7 +41,7 @@ class App extends React.Component {
     }
 
     handleOnKeyPress = (event) => {
-        if (event.key == 'Enter') {
+        if (event.key.toLowerCase() === 'enter') {
             if (this.state.inputValue) {
                 const todo = {
                     id: Date.now(),
