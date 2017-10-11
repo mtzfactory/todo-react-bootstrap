@@ -1,0 +1,22 @@
+{
+  "name": "todo-react-bootstrap",
+  "version": "1.0.0",
+  "description": "TO-DO done with React",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mtzfactory/todo-react-bootstrap.git"
+  },
+  "author": "mtzFactory",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mtzfactory/todo-react-bootstrap/issues"
+  },
+  "homepage": "https://github.com/mtzfactory/todo-react-bootstrap#readme",
+  "devDependencies": {
+    "eslint-config-react-app": "^2.0.1"
+  }
+}
