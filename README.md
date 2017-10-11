@@ -3,10 +3,10 @@
 
 ## Full Stack Web Development Bootcamp @Otoño2017
 
-### Otro TO-DO realizado en React, con ayuda de Bootstrap.
+### TO-DO app ~ realizado en React, y un poco de ayuda de Bootstrap.
 
-Jugando un poco con React ;-)
-
-[enlace](https://bootsnipp.com/snippets/featured/todo-example)
+Transformación a React de una [template[todo-template] que usa JQuery y Bootstrap.
 
 ![screenshoot](./img/screenshoot-1.png)
+
+[todo-template]: https://bootsnipp.com/snippets/featured/todo-example
