@@ -115,188 +115,136 @@ class App extends React.Component {
     }
 
     render() {
-        return ( <
-            div className = "container" >
-            <
-            div className = "row" >
-            <
-            div className = "col-md-6" >
-            <
-            Todo onHandleChange = {
-                this.handleOnChange
-            }
-            onHandleKeyPress = {
-                this.handleOnKeyPress
-            }
-            onHandleAllDone = {
-                this.handleAllDone
-            }
-            onHandleDoneClick = {
-                this.handleDoneClick
-            }
-            todos = {
-                this.state.todos
-            }
-            inputValue = {
-                this.state.inputValue
-            }
-            /> <
-            /div> <
-            div className = "col-md-6" >
-            <
-            AlreadyDone onRemoveTodo = {
-                this.handleRemoveTodo
-            }
-            todos = {
-                this.state.todos
-            }
-            /> <
-            /div> <
-            /div> <
-            /div>
+        return (
+            <div className = "container">
+                <div className = "row">
+                    <div className = "col-md-6">
+                        <Todo
+                            onHandleChange = { this.handleOnChange }
+                            onHandleKeyPress = { this.handleOnKeyPress }
+                            onHandleAllDone = { this.handleAllDone }
+                            onHandleDoneClick = { this.handleDoneClick }
+                            todos = { this.state.todos }
+                            inputValue = { this.state.inputValue }
+                        />
+                    </div>
+                    <div className = "col-md-6">
+                        <AlreadyDone
+                            onRemoveTodo = { this.handleRemoveTodo }
+                            todos = { this.state.todos }
+                        />
+                    </div>
+                </div>
+            </div>
         )
     }
 }
 
 class Todo extends React.Component {
     render() {
-        return ( <
-            div className = "todolist not-done" >
-            <
-            h1 > Todos < /h1> <
-            input value = {
-                this.props.inputValue
-            }
-            onChange = {
-                this.props.onHandleChange
-            }
-            onKeyPress = {
-                this.props.onHandleKeyPress
-            }
-            type = "text"
-            className = "form-control add-todo"
-            placeholder = "Add todo" / >
-            <
-            button onClick = {
-                this.props.onHandleAllDone
-            }
-            id = "checkAll"
-            className = "btn btn-success" > Mark all as done < /button> <
-            hr / >
-            <
-            TodosList onHandleDoneClick = {
-                this.props.onHandleDoneClick
-            }
-            todos = {
-                this.props.todos
-            }
-            /> <
-            TodosFooter total = {
-                //this.props.todos.enhanceddMap('done', false).length
-                this.props.todos.reduce(function (acum, todo) {
-                    return !todo.done ? ++acum : acum
-                }, 0)
-            }
-            /> <
-            /div>
+        return (
+            <div className = "todolist not-done" >
+                <h1>Todos</h1>
+                <input
+                    value = { this.props.inputValue }
+                    onChange = { this.props.onHandleChange }
+                    onKeyPress = { this.props.onHandleKeyPress }
+                    type = "text"
+                    className = "form-control add-todo"
+                    placeholder = "Add todo"
+                />
+                <button 
+                    onClick = { this.props.onHandleAllDone }
+                    id = "checkAll"
+                    className = "btn btn-success">Mark all as done
+                </button>
+                <hr/>
+                <TodosList
+                    onHandleDoneClick = { this.props.onHandleDoneClick }
+                    todos = { this.props.todos }
+                />
+                <TodosFooter
+                    total = {
+                        this.props.todos.reduce(function (acum, todo) {
+                            return !todo.done ? ++acum : acum
+                        }, 0)
+                    }
+                />
+            </div>
         )
     }
 }
 
 class TodosList extends React.Component {
     render() {
-        return ( <
-            ul id = "sortable"
-            className = "list-unstyled" > {
+        return (
+            <ul id = "sortable" className = "list-unstyled" > {
                 this.props.todos.enhanceddMap('done', false, (todo) => {
-                    return ( <
-                        li key = {
-                            todo.id
-                        }
-                        className = "ui-state-default" >
-                        <
-                        div className = "checkbox" >
-                        <
-                        label >
-                        <
-                        input value = {
-                            todo.id
-                        }
-                        onChange = {
-                            this.props.onHandleDoneClick
-                        }
-                        type = "checkbox" / > {
-                            todo.text
-                        } <
-                        /label> <
-                        /div> <
-                        /li>
+                    return (
+                        <li key = { todo.id } className = "ui-state-default">
+                            <div className = "checkbox">
+                                <label>
+                                    <input value = { todo.id }
+                                        onChange = { this.props.onHandleDoneClick }
+                                        type = "checkbox"
+                                    />{ todo.text }
+                                </label>
+                            </div>
+                        </li>
                     )
                 })
-            } <
-            /ul>
+            }
+            </ul>
         )
     }
 }
 
 class TodosFooter extends React.Component {
     render() {
-        return ( <
-            div className = "todo-footer" >
-            <
-            strong > < span className = "count-todos" > {
-                this.props.total
-            } < /span></strong > Items Left <
-            /div>
+        return (
+            <div className = "todo-footer">
+                <strong>
+                    <span className = "count-todos">{ this.props.total}</span>
+                </strong>Items Left
+            </div>
         )
     }
 }
 
 class AlreadyDone extends React.Component {
     render() {
-        return ( <
-            div className = "todolist" >
-            <
-            h1 > Already Done < /h1> <
-            AlreadyDoneList onRemoveTodo = {
-                this.props.onRemoveTodo
-            }
-            todos = {
-                this.props.todos
-            }
-            /> <
-            /div>
+        return ( 
+            <div className = "todolist">
+                <h1>Already Done</h1>
+                <AlreadyDoneList 
+                    onRemoveTodo = { this.props.onRemoveTodo } 
+                    todos = { this.props.todos }
+                />
+            </div>
         )
     }
 }
 
 class AlreadyDoneList extends React.Component {
     render() {
-        return ( <
-            ul id = "done-items"
-            className = "list-unstyled" > {
+        return (
+            <ul id = "done-items" className = "list-unstyled" >
+            {
                 this.props.todos.enhanceddMap('done', true, (todo) => {
-                    return ( <
-                        li key = {
-                            todo.id
-                        } > {
-                            todo.text
-                        } & nbsp; <
-                        button onClick = {
-                            this.props.onRemoveTodo
-                        }
-                        data - id = {
-                            todo.id
-                        }
-                        className = "remove-item btn btn-default btn-xs pull-right" >
-                        <
-                        span className = "glyphicon glyphicon-remove" > < /span> <
-                        /button> <
-                        /li>
+                    return (
+                        <li key = { todo.id}>
+                            { todo.text }&nbsp;
+                            <button
+                                onClick = { this.props.onRemoveTodo }
+                                data-id = { todo.id }
+                                className = "remove-item btn btn-default btn-xs pull-right">
+                                    <span className = "glyphicon glyphicon-remove"></span>
+                            </button>
+                        </li>
                     )
                 })
-            } <
-            /ul>
+            }
+            </ul>
         )
     }
 }
