@@ -79,14 +79,10 @@ class App extends React.Component {
         })
     }
 
-    handleDoneClick = (event) => {
-        event.preventDefault()
-
-        const itemId = event.target.value //event.target.parentElement.parentElement.dataset.id
-
+    MarkDoneThisTodo = (item) => {
         this.setState(function (prevState) {
             const todos = prevState.todos.map(function (todo) {
-                if (itemId == todo.id)
+                if (item == todo.id)
                     todo.done = true
 
                 return todo
@@ -98,14 +94,10 @@ class App extends React.Component {
         })
     }
 
-    handleRemoveTodo = (event) => {
-        event.preventDefault()
-
-        const itemId = event.target.parentElement.dataset.id
-
+    RemoveThisTodo = (item) => {
         this.setState(function (prevState) {
             const todos = prevState.todos.filter(function (todo) {
-                return itemId != todo.id
+                return item != todo.id
             })
 
             return {
@@ -123,14 +115,14 @@ class App extends React.Component {
                             onHandleChange = { this.handleOnChange }
                             onHandleKeyPress = { this.handleOnKeyPress }
                             onHandleAllDone = { this.handleAllDone }
-                            onHandleDoneClick = { this.handleDoneClick }
+                            onMarkDoneThisTodo = { this.MarkDoneThisTodo }
                             todos = { this.state.todos }
                             inputValue = { this.state.inputValue }
                         />
                     </div>
                     <div className = "col-md-6">
                         <AlreadyDone
-                            onRemoveTodo = { this.handleRemoveTodo }
+                            onRemoveThisTodo = { this.RemoveThisTodo }
                             todos = { this.state.todos }
                         />
                     </div>
@@ -160,7 +152,7 @@ class Todo extends React.Component {
                 </button>
                 <hr/>
                 <TodosList
-                    onHandleDoneClick = { this.props.onHandleDoneClick }
+                    onMarkDoneThisTodo = { this.props.onMarkDoneThisTodo }
                     todos = { this.props.todos }
                 />
                 <TodosFooter
@@ -176,6 +168,13 @@ class Todo extends React.Component {
 }
 
 class TodosList extends React.Component {
+    handleDoneClick = (event) => {
+        event.preventDefault()
+
+        const itemId = event.target.value //event.target.parentElement.parentElement.dataset.id
+        this.props.onMarkDoneThisTodo(itemId)
+    }
+
     render() {
         return (
             <ul id = "sortable" className = "list-unstyled" > {
@@ -185,7 +184,7 @@ class TodosList extends React.Component {
                             <div className = "checkbox">
                                 <label>
                                     <input value = { todo.id }
-                                        onChange = { this.props.onHandleDoneClick }
+                                        onChange = { this.handleDoneClick }
                                         type = "checkbox"
                                     />{ todo.text }
                                 </label>
@@ -217,7 +216,7 @@ class AlreadyDone extends React.Component {
             <div className = "todolist">
                 <h1>Already Done</h1>
                 <AlreadyDoneList 
-                    onRemoveTodo = { this.props.onRemoveTodo } 
+                    onRemoveThisTodo = { this.props.onRemoveThisTodo } 
                     todos = { this.props.todos }
                 />
             </div>
@@ -226,6 +225,14 @@ class AlreadyDone extends React.Component {
 }
 
 class AlreadyDoneList extends React.Component {
+
+    handleRemoveThisTodo = (event) => {
+        event.preventDefault()
+        
+        const itemId = event.target.parentElement.dataset.id
+        this.props.onRemoveThisTodo(itemId)
+    }
+
     render() {
         return (
             <ul id = "done-items" className = "list-unstyled" >
@@ -235,7 +242,7 @@ class AlreadyDoneList extends React.Component {
                         <li key = { todo.id}>
                             { todo.text }&nbsp;
                             <button
-                                onClick = { this.props.onRemoveTodo }
+                                onClick = { this.handleRemoveThisTodo }
                                 data-id = { todo.id }
                                 className = "remove-item btn btn-default btn-xs pull-right">
                                     <span className = "glyphicon glyphicon-remove"></span>
