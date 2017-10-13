@@ -34,49 +34,37 @@ class App extends React.Component {
         super()
 
         this.state = {
-            inputValue: '',
             todos: []
         }
     }
 
-    handleOnKeyPress = (event) => {
-        if (event.key.toLowerCase() === 'enter') {
-            if (this.state.inputValue) {
-                const todo = {
-                    id: Date.now(),
-                    text: this.state.inputValue,
-                    done: false
-                }
-
-                this.setState(function (prevState) {
-                    return {
-                        inputValue: '',
-                        todos: prevState.todos.concat(todo)
-                    }
-                })
-            }
+    InsertNewTodo = (text) => {
+        const todo = {
+            id: Date.now(),
+            text,
+            done: false
         }
-    }
-
-    handleOnChange = (event) => {
-        this.setState({
-            inputValue: event.target.value
-        })
-    }
-
-    handleAllDone = (event) => {
-        event.preventDefault()
 
         this.setState(function (prevState) {
-            const todos = prevState.todos.map(function (todo) {
-                todo.done = true
-                return todo
-            })
-
             return {
-                todos
+                todos: prevState.todos.concat(todo)
             }
         })
+    }
+
+    MarkAllDone = () => {
+        if (this.state.todos && this.state.todos.length > 0) {
+            this.setState(function (prevState) {
+                const todos = prevState.todos.map(function (todo) {
+                    todo.done = true
+                    return todo
+                })
+    
+                return {
+                    todos
+                }
+            })    
+        }
     }
 
     MarkDoneThisTodo = (item) => {
@@ -112,12 +100,10 @@ class App extends React.Component {
                 <div className = "row">
                     <div className = "col-md-6">
                         <Todo
-                            onHandleChange = { this.handleOnChange }
-                            onHandleKeyPress = { this.handleOnKeyPress }
-                            onHandleAllDone = { this.handleAllDone }
+                            onInsertNewTodo = { this.InsertNewTodo }
+                            onMarkAllDone = { this.MarkAllDone }
                             onMarkDoneThisTodo = { this.MarkDoneThisTodo }
                             todos = { this.state.todos }
-                            inputValue = { this.state.inputValue }
                         />
                     </div>
                     <div className = "col-md-6">
@@ -133,20 +119,55 @@ class App extends React.Component {
 }
 
 class Todo extends React.Component {
+
+    constructor() {
+        super()
+
+        this.state = {
+            text: '',
+        }
+    }
+
+    handleOnChange = (event) => {
+        event.preventDefault()
+
+        this.setState({
+            text: event.target.value
+        })
+    }
+
+    handleOnKeyPress = (event) => {
+        if (event.key.toLowerCase() === 'enter') {
+            const text = this.state.text
+            if (text) {
+                this.props.onInsertNewTodo(text)
+                this.setState({
+                    text: ''
+                })
+            }
+            event.target.value = ''
+        }
+    }
+
+    handleMarkAllDone = (event) => {
+        event.preventDefault()
+
+        this.props.onMarkAllDone()
+    }
+
     render() {
         return (
             <div className = "todolist not-done" >
                 <h1>Todos</h1>
                 <input
-                    value = { this.props.inputValue }
-                    onChange = { this.props.onHandleChange }
-                    onKeyPress = { this.props.onHandleKeyPress }
+                    onChange = { this.handleOnChange }
+                    onKeyPress = { this.handleOnKeyPress }
                     type = "text"
                     className = "form-control add-todo"
                     placeholder = "Add todo"
                 />
                 <button 
-                    onClick = { this.props.onHandleAllDone }
+                    onClick = { this.handleMarkAllDone }
                     id = "checkAll"
                     className = "btn btn-success">Mark all as done
                 </button>
@@ -169,10 +190,8 @@ class Todo extends React.Component {
 
 class TodosList extends React.Component {
     handleDoneClick = (event) => {
-        event.preventDefault()
-
         const itemId = event.target.value //event.target.parentElement.parentElement.dataset.id
-        this.props.onMarkDoneThisTodo(itemId)
+        setTimeout(() => this.props.onMarkDoneThisTodo(itemId), 150)
     }
 
     render() {
